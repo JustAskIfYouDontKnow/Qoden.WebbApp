@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace WebApp
 {
-    public class Program
+    static internal class Program
     {
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
                 WebHost.CreateDefaultBuilder(args)
                        .UseStartup<Startup>();
 

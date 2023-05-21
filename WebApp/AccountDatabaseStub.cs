@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApp
 {
-    class AccountDatabaseStub : IAccountDatabase
+    public class AccountDatabaseStub : IAccountDatabase
     {
         private readonly Dictionary<string, Account> _accounts = new Dictionary<string, Account>();
         private int _internalIdCounter;

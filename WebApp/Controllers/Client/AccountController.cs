@@ -2,11 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApp
+namespace WebApp.Controllers.Client
 {
     // TODO 4: unauthorized users should receive 401 status code
-    [Route("api/account")]
-    public class AccountController : Controller
+    public class AccountController : AbstractClientController
     {
         private readonly IAccountService _accountService;
 

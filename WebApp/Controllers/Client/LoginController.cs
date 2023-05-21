@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApp
+namespace WebApp.Controllers.Client
 {
-    [Route("api")]
-    public class LoginController : Controller
+    public class LoginController : AbstractClientController
     {
         private readonly IAccountDatabase _db;
 

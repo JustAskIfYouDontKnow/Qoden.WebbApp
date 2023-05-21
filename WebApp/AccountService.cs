@@ -2,7 +2,7 @@
 
 namespace WebApp
 {
-    class AccountService : IAccountService
+    public class AccountService : IAccountService
     {
         private readonly IAccountCache _cache;
         private readonly IAccountDatabase _db;

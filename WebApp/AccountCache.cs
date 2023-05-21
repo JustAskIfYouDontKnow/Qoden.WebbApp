@@ -2,7 +2,7 @@
 
 namespace WebApp
 {
-    class AccountCache : IAccountCache
+    public class AccountCache : IAccountCache
     {
         private readonly ConcurrentDictionary<long, Account> _itemsById = new ConcurrentDictionary<long, Account>();
         private readonly ConcurrentDictionary<string, Account> _itemsByGuid = new ConcurrentDictionary<string, Account>();
