@@ -1,4 +1,4 @@
-﻿namespace WebApp.Model
+﻿namespace WebApp.Database.Model
 {
     public class LoginAccount
     {
@@ -6,3 +6,5 @@
         public string Password { get; set; }
     }
 }
+
+  

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using WebApp.Model;
+using WebApp.Database.Model;
 
 namespace WebApp.Test
 {

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApp.Model;
+using WebApp.Database.Model;
 using WebApp.Services;
 
 namespace WebApp.Controllers.Client
@@ -54,7 +54,7 @@ namespace WebApp.Controllers.Client
         {
             var account = await GetAccountFromCookies();
             account.Counter++;
-            await _accountService.UpdateAsync(account);
+            _accountService.Update(account);
         }
     }
 }

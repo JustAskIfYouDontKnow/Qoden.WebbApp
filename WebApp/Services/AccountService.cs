@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
-using WebApp.Model;
+using WebApp.Database;
+using WebApp.Database.Model;
 
 namespace WebApp.Services
 {
@@ -38,10 +39,9 @@ namespace WebApp.Services
         }
 
 
-        public async ValueTask<bool> UpdateAsync(Account account)
+        public void Update(Account account)
         {
-           _cache.AddOrUpdate(account);
-           return true;
+          _cache.AddOrUpdate(account);
         }
 
 

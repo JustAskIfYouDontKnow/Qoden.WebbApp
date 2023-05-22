@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using WebApp.Database;
 using WebApp.Services;
 
 namespace WebApp.Test

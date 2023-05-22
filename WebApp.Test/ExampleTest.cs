@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using WebApp.Model;
+using WebApp.Database.Model;
 
 namespace WebApp.Test
 {

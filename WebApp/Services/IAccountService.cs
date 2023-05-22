@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using WebApp.Model;
+using WebApp.Database.Model;
 
 namespace WebApp.Services
 {
@@ -14,7 +14,7 @@ namespace WebApp.Services
         /// Get account from cache or load it from db. 
         /// </summary>
         ValueTask<Account> LoadOrCreateAsync(string id);
-        ValueTask<bool> UpdateAsync(Account account);
+        void Update(Account account);
         ValueTask<Account> LoadOrCreateAsync(long id);
     }
 }

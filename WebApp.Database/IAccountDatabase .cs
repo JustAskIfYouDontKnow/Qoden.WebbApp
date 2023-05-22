@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using WebApp.Model;
+using WebApp.Database.Model;
 
-namespace WebApp
+namespace WebApp.Database
 {
     public interface IAccountDatabase
     {

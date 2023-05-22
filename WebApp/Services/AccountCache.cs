@@ -1,5 +1,5 @@
 ﻿using System.Collections.Concurrent;
-using WebApp.Model;
+using WebApp.Database.Model;
 
 namespace WebApp.Services
 {

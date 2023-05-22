@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApp.Model;
+using WebApp.Database;
+using WebApp.Database.Model;
 
 namespace WebApp.Controllers.Client
 {

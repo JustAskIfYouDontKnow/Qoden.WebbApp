@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using WebApp.Database;
 using WebApp.Services;
 
 namespace WebApp
@@ -22,7 +23,7 @@ namespace WebApp
             services.AddScoped<IAccountService, AccountService>();
             services.AddSingleton<IAccountDatabase, AccountDatabaseStub>();
             services.AddSingleton<IAccountCache, AccountCache>();
-            
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {

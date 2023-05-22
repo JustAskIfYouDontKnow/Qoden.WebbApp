@@ -7,4 +7,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="System.Reactive.Linq" Version="4.4.1" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebApp.Database\WebApp.Database.csproj" />
+  </ItemGroup>
 </Project>
