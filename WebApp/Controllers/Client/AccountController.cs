@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Model;
+using WebApp.Services;
 
 namespace WebApp.Controllers.Client
 {
-    // TODO 4: unauthorized users should receive 401 status code
     public class AccountController : AbstractClientController
     {
         private readonly IAccountService _accountService;
@@ -13,29 +15,46 @@ namespace WebApp.Controllers.Client
         {
             _accountService = accountService;
         }
-
+        
         [Authorize] 
         [HttpGet]
-        public ValueTask<Account> Get()
+        public ValueTask<Account> GetAccountFromCookies()
         {
-            return _accountService.LoadOrCreateAsync(null /* TODO 3: Get user id from cookie */);
+            var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "externalId");
+
+            if (userIdClaim == null)
+            {
+                return default;
+            }
+
+            if (long.TryParse(userIdClaim.Value, out var userIdLong))
+            {
+                return _accountService.LoadOrCreateAsync(userIdLong);
+            }
+            
+            return _accountService.LoadOrCreateAsync(userIdClaim.Value);
+        }
+        
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task <IActionResult> GetByInternalId(int id)
+        {
+            var accountInfo = await _accountService.GetFromCache(id);
+
+            if (accountInfo is null)
+            {
+                return NoContent();
+            }
+            return Ok(accountInfo);
         }
 
-        //TODO 5: Endpoint should works only for users with "Admin" Role
         [Authorize]
-        [HttpGet("{id}")]
-        public Account GetByInternalId([FromRoute] int id)
+        [HttpPost]
+        public async Task UpdateCount()
         {
-            return _accountService.GetFromCache(id);
-        }
-
-        [Authorize]
-        [HttpPost("counter")]
-        public async Task UpdateAccount()
-        {
-            //Update account in cache, don't bother saving to DB, this is not an objective of this task.
-            var account = await Get();
+            var account = await GetAccountFromCookies();
             account.Counter++;
+            await _accountService.UpdateAsync(account);
         }
     }
 }
