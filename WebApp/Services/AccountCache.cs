@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using WebApp.Model;
 
-namespace WebApp
+namespace WebApp.Services
 {
     public class AccountCache : IAccountCache
     {

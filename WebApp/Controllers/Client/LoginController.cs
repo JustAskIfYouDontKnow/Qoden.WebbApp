@@ -1,5 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Model;
 
 namespace WebApp.Controllers.Client
 {
@@ -12,15 +17,30 @@ namespace WebApp.Controllers.Client
             _db = db;
         }
 
-        [HttpPost("sign-in")]
-        public async Task Login(string userName)
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginAccount loginAccount)
         {
-            var account = await _db.FindByUserNameAsync(userName);
-            if (account != null)
+            var account = await _db.FindByUserNameAsync(loginAccount.UserName);
+
+            if (account is null)
             {
-                //TODO 1: Generate auth cookie for user 'userName' with external id
+                return NotFound();
             }
-            //TODO 2: return 404 if user not found
+
+            var claims = new[]
+            {
+                new Claim("externalId", account.ExternalId),
+                new Claim(ClaimTypes.Name, account.UserName),
+                new Claim(ClaimTypes.Role, account.Role)
+            };
+        
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+        
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                
+            return Ok($"Success login, your internal id {account.InternalId}");
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using WebApp.Model;
 
-namespace WebApp
+namespace WebApp.Services
 {
     public interface IAccountCache
     {

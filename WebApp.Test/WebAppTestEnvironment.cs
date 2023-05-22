@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework;
+using WebApp.Services;
 
 namespace WebApp.Test
 {
