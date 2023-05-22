@@ -1,4 +1,6 @@
-﻿namespace WebApp
+﻿using WebApp.Model;
+
+namespace WebApp
 {
     public interface IAccountCache
     {

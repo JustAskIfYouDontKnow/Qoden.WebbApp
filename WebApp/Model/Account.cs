@@ -1,4 +1,4 @@
-﻿namespace WebApp
+﻿namespace WebApp.Model
 {
     public class Account
     {
