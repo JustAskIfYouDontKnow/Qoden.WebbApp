@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using WebApp.Model;
 
-namespace WebApp
+namespace WebApp.Services
 {
     public class AccountService : IAccountService
     {
@@ -14,7 +14,7 @@ namespace WebApp
             _db = db;
         }
 
-        public Account GetFromCache(long id)
+        public async ValueTask<Account> GetFromCache(long id)
         {
             if (_cache.TryGetValue(id, out var account))
             {
@@ -26,22 +26,34 @@ namespace WebApp
 
         public async ValueTask<Account> LoadOrCreateAsync(string id)
         {
-            if (!_cache.TryGetValue(id, out var account))
+            if (_cache.TryGetValue(id, out var account))
             {
-                account = await _db.GetOrCreateAccountAsync(id);
-                _cache.AddOrUpdate(account);
+                return account;
             }
+
+            account = await _db.GetOrCreateAccountAsync(id);
+            _cache.AddOrUpdate(account);
 
             return account;
         }
 
+
+        public async ValueTask<bool> UpdateAsync(Account account)
+        {
+           _cache.AddOrUpdate(account);
+           return true;
+        }
+
+
         public async ValueTask<Account> LoadOrCreateAsync(long id)
         {
-            if (!_cache.TryGetValue(id, out var account))
+            if (_cache.TryGetValue(id, out var account))
             {
-                account = await _db.GetOrCreateAccountAsync(id);
-                _cache.AddOrUpdate(account);
+                return account;
             }
+
+            account = await _db.GetOrCreateAccountAsync(id);
+            _cache.AddOrUpdate(account);
 
             return account;
         }

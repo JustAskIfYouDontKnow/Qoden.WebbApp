@@ -1,7 +1,9 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json;
 using NUnit.Framework;
+using WebApp.Model;
 
 namespace WebApp.Test
 {
@@ -13,8 +15,8 @@ namespace WebApp.Test
     [TestFixture]
     public class MyTestBase
     {
-        protected WebAppTestEnvironment Env { get; set; }
-        protected HttpClient Client { get; set; }
+        private WebAppTestEnvironment Env { get; set; }
+        private HttpClient Client { get; set; }
         protected HttpClient AliceClient { get; set; }
         protected HttpClient BobClient { get; set; }
 
@@ -37,14 +39,32 @@ namespace WebApp.Test
         {
             Env.Prepare();
             Client = Env.WebAppHost.GetClient();
-            AliceClient = CreateAuthorizedClientAsync("alice@mailinator.com").GetAwaiter().GetResult();
-            BobClient = CreateAuthorizedClientAsync("bob@mailinator.com").GetAwaiter().GetResult();
+            
+            var alice = new LoginAccount
+            {
+                UserName = "alice@mailinator.com",
+                Password = null
+            };
+            
+            var bob = new LoginAccount
+            {
+                UserName = "bob@mailinator.com",
+                Password = null
+            };
+            
+            AliceClient = CreateAuthorizedClientAsync(alice).GetAwaiter().GetResult(); 
+            BobClient = CreateAuthorizedClientAsync(bob).GetAwaiter().GetResult();
         }
 
-        protected async Task<HttpClient> CreateAuthorizedClientAsync(string login)
+
+        private async Task<HttpClient> CreateAuthorizedClientAsync(LoginAccount account)
         {
             var client = Env.WebAppHost.GetClient();
-            var res = await client.SignInAsync(login);
+            
+            var json = JsonConvert.SerializeObject(account);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            
+            var res = await client.SignInAsync(content);
             client.DefaultRequestHeaders.Add(HeaderNames.Cookie, res.Headers.GetValues(HeaderNames.SetCookie));
             return client;
         }
