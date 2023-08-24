@@ -15,14 +15,14 @@ namespace WebApp.Database
         {
             _accounts["alice"] = new Account
             {
-                ExternalId = "alice",
+                ExternalId = "alicessssssssss",
                 InternalId = ++_internalIdCounter,
                 UserName = "alice@mailinator.com",
                 Role = "Admin"
             };
             _accounts["bob"] = new Account
             {
-                ExternalId = "bob",
+                ExternalId = "bobs",
                 InternalId = ++_internalIdCounter,
                 UserName = "bob@mailinator.com",
                 Role = "user"
